@@ -606,6 +606,114 @@
   }
 }
 
+/* Galeria de vídeos: faixa côncava contínua, com centro recuado e laterais próximas. */
+.credit-video-ring {
+  height: 350px;
+  overflow: hidden;
+  perspective: 1250px;
+  perspective-origin: 50% 50%;
+}
+
+.credit-video-ring-track {
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.credit-video-ring-item {
+  top: 50%;
+  width: 186px;
+  height: 300px;
+  border-radius: 10px;
+  transform-origin: center center;
+  backface-visibility: hidden;
+}
+
+/* As posições são calculadas pela largura visual projetada de cada card,
+   mantendo aproximadamente 8–12px entre as bordas transformadas. */
+.credit-video-ring-item:nth-child(1) {
+  left: calc(50% - 480px);
+  transform: translate(-50%, -50%) translateZ(34px) rotateY(34deg) scale(1);
+}
+
+.credit-video-ring-item:nth-child(2) {
+  left: calc(50% - 320px);
+  transform: translate(-50%, -50%) translateZ(18px) rotateY(25deg) scale(0.94);
+}
+
+.credit-video-ring-item:nth-child(3) {
+  left: calc(50% - 160px);
+  transform: translate(-50%, -50%) translateZ(2px) rotateY(14deg) scale(0.87);
+}
+
+.credit-video-ring-item:nth-child(4) {
+  left: 50%;
+  transform: translate(-50%, -50%) translateZ(-92px) rotateY(0deg) scale(0.8);
+}
+
+.credit-video-ring-item:nth-child(5) {
+  left: calc(50% + 160px);
+  transform: translate(-50%, -50%) translateZ(2px) rotateY(-14deg) scale(0.87);
+}
+
+.credit-video-ring-item:nth-child(6) {
+  left: calc(50% + 320px);
+  transform: translate(-50%, -50%) translateZ(18px) rotateY(-25deg) scale(0.94);
+}
+
+.credit-video-ring-item:nth-child(7) {
+  left: calc(50% + 480px);
+  transform: translate(-50%, -50%) translateZ(34px) rotateY(-34deg) scale(1);
+}
+
+@media (max-width: 767px) {
+  .credit-video-ring {
+    height: 292px;
+    margin-top: 30px;
+    perspective: 900px;
+  }
+
+  .credit-video-ring-item {
+    width: 150px;
+    height: 250px;
+    border-radius: 10px;
+  }
+
+  .credit-video-ring-item:nth-child(1) {
+    left: calc(50% - 405px);
+    transform: translate(-50%, -50%) translateZ(24px) rotateY(34deg) scale(1);
+  }
+
+  .credit-video-ring-item:nth-child(2) {
+    left: calc(50% - 270px);
+    transform: translate(-50%, -50%) translateZ(12px) rotateY(25deg) scale(0.94);
+  }
+
+  .credit-video-ring-item:nth-child(3) {
+    left: calc(50% - 135px);
+    transform: translate(-50%, -50%) translateZ(0) rotateY(14deg) scale(0.87);
+  }
+
+  .credit-video-ring-item:nth-child(4) {
+    left: 50%;
+    transform: translate(-50%, -50%) translateZ(-64px) rotateY(0deg) scale(0.8);
+  }
+
+  .credit-video-ring-item:nth-child(5) {
+    left: calc(50% + 135px);
+    transform: translate(-50%, -50%) translateZ(0) rotateY(-14deg) scale(0.87);
+  }
+
+  .credit-video-ring-item:nth-child(6) {
+    left: calc(50% + 270px);
+    transform: translate(-50%, -50%) translateZ(12px) rotateY(-25deg) scale(0.94);
+  }
+
+  .credit-video-ring-item:nth-child(7) {
+    left: calc(50% + 405px);
+    transform: translate(-50%, -50%) translateZ(24px) rotateY(-34deg) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .credit-video-ring-item {
     transition: none;
