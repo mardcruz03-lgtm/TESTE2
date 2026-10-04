@@ -492,8 +492,8 @@
   position: absolute;
   top: 18px;
   left: 50%;
-  width: clamp(72px, 8vw, 104px);
-  height: 184px;
+  width: clamp(80px, 8.5vw, 112px);
+  height: 198px;
   overflow: hidden;
   border: 1px solid rgb(255 166 77 / 48%);
   border-radius: 14px;
@@ -574,8 +574,8 @@
 
   .credit-video-ring-item {
     top: 16px;
-    width: 62px;
-    height: 154px;
+    width: 68px;
+    height: 164px;
     border-radius: 11px;
   }
 
