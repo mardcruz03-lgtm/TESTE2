@@ -374,38 +374,164 @@ type EmbersProps = {
   variant?: "hero" | "method" | "plan";
 };
 
-function CreditVideoRing() {
-  const ringItems = showcaseItems.slice(0, 7);
+function CreditVideoRing({
+  onSelect,
+  isOpen,
+}: {
+  onSelect: (item: (typeof showcaseItems)[number]) => void;
+  isOpen: boolean;
+}) {
+  const ringItems = Array.from({ length: 21 }, (_, index) => {
+    const item = showcaseItems[index % showcaseItems.length];
+
+    return {
+      ...item,
+      ringKey: `${item.title}-${index}`,
+    };
+  });
+
+  const ringRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef(0);
+  const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
+  const pointerOffsetRef = useRef(0);
+  const draggedRef = useRef(false);
+  const [offset, setOffset] = useState(0);
+  const [isPointerDown, setIsPointerDown] = useState(false);
+
+  const getStep = () => {
+    const width = ringRef.current?.clientWidth ?? window.innerWidth;
+
+    if (width <= 767) {
+      return 132;
+    }
+
+    return Math.max(132, Math.min(164, width / 7.25));
+  };
+
+  useEffect(() => {
+    let frame = 0;
+    let previousTime = performance.now();
+
+    const animate = (time: number) => {
+      const delta = time - previousTime;
+      previousTime = time;
+
+      if (!isOpen && !isPointerDown && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        offsetRef.current += (delta / 1000) * 8;
+        setOffset(offsetRef.current);
+      }
+
+      frame = window.requestAnimationFrame(animate);
+    };
+
+    frame = window.requestAnimationFrame(animate);
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [isOpen, isPointerDown]);
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    pointerStartRef.current = {
+      x: event.clientX,
+      y: event.clientY,
+    };
+    pointerOffsetRef.current = offsetRef.current;
+    draggedRef.current = false;
+    setIsPointerDown(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!pointerStartRef.current) return;
+
+    const deltaX = event.clientX - pointerStartRef.current.x;
+    const deltaY = event.clientY - pointerStartRef.current.y;
+
+    if (!draggedRef.current && Math.abs(deltaX) < 6) return;
+    if (!draggedRef.current && Math.abs(deltaY) > Math.abs(deltaX)) return;
+
+    draggedRef.current = true;
+    event.preventDefault();
+
+    offsetRef.current = pointerOffsetRef.current + deltaX;
+    setOffset(offsetRef.current);
+  };
+
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    pointerStartRef.current = null;
+    setIsPointerDown(false);
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    item: (typeof showcaseItems)[number],
+  ) => {
+    if (draggedRef.current) {
+      event.preventDefault();
+      event.stopPropagation();
+      draggedRef.current = false;
+      return;
+    }
+
+    onSelect(item);
+  };
+
+  const step = getStep();
+  const loopWidth = ringItems.length * step;
+  const centerIndex = (ringItems.length - 1) / 2;
 
   return (
     <div
-      className="credit-video-ring"
+      ref={ringRef}
+      className={`credit-video-ring ${isPointerDown ? "is-dragging" : ""}`}
       aria-label="Exemplos de vídeos produzidos pela Cello OG Design"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      onPointerLeave={(event) => {
+        if (isPointerDown) handlePointerUp(event);
+      }}
     >
       <div className="credit-video-ring-track">
-        {ringItems.map((item, index) => (
-          <div
-            className="credit-video-ring-item"
-            key={`${item.title}-${index}`}
-            style={
-              {
-                "--ring-index": index,
-                "--ring-count": ringItems.length,
-              } as React.CSSProperties
-            }
-          >
-            <video
-              src={item.src}
-              poster={item.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label={item.title}
-            />
-          </div>
-        ))}
+        {ringItems.map((item, index) => {
+          const rawX = (index - centerIndex) * step + offset;
+          const x =
+            ((rawX + loopWidth / 2) % loopWidth + loopWidth) % loopWidth -
+            loopWidth / 2;
+          const distance = Math.min(Math.abs(x) / (step * 3.45), 1);
+          const scale = 0.8 + distance * 0.2;
+          const rotation = x < 0 ? 32 * distance : -32 * distance;
+          const depth = -92 + distance * 126;
+
+          return (
+            <button
+              key={item.ringKey}
+              type="button"
+              className="credit-video-ring-item"
+              aria-label={`Assistir ${item.title}`}
+              style={{
+                transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${depth}px) rotateY(${rotation}deg) scale(${scale})`,
+                zIndex: Math.round(100 - distance * 50),
+              }}
+              onClick={(event) => handleClick(event, item)}
+            >
+              <video
+                src={item.src}
+                poster={item.poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label={item.title}
+              />
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -2244,7 +2370,10 @@ export default function SalesLanding() {
             Validade do saldo: até 6 meses.
           </p>
 
-          <CreditVideoRing />
+          <CreditVideoRing
+            isOpen={Boolean(activeGallery)}
+            onSelect={setActiveGallery}
+          />
 
           <div className="mt-12 flex snap-x gap-4 overflow-x-auto pb-6 [scrollbar-width:none] lg:grid lg:grid-cols-5 lg:overflow-visible">
             {plans.map((plan) => {
