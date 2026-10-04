@@ -374,6 +374,38 @@ type EmbersProps = {
   variant?: "hero" | "method" | "plan";
 };
 
+function CreditVideoRing() {
+  const ringItems = showcaseItems.slice(0, 7);
+
+  return (
+    <div
+      className="credit-video-ring"
+      aria-label="Exemplos de vídeos produzidos pela Cello OG Design"
+    >
+      <div className="credit-video-ring-track">
+        {ringItems.map((item, index) => (
+          <div
+            className="credit-video-ring-item"
+            key={`${item.title}-${index}`}
+            style={{ "--ring-index": index } as React.CSSProperties}
+          >
+            <video
+              src={item.src}
+              poster={item.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={item.title}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function DesktopFireplaceSparks() {
   const sparks = Array.from({ length: 60 }, (_, index) => ({
     x: 15 + ((index * 31) % 71),
@@ -2217,6 +2249,8 @@ export default function SalesLanding() {
           <p className="mt-4 text-sm font-semibold text-primary">
             Validade do saldo: até 6 meses.
           </p>
+
+          <CreditVideoRing />
 
           <div className="mt-12 flex snap-x gap-4 overflow-x-auto pb-6 [scrollbar-width:none] lg:grid lg:grid-cols-5 lg:overflow-visible">
             {plans.map((plan) => {
