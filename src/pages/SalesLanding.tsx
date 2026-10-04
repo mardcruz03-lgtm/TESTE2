@@ -1456,17 +1456,6 @@ export default function SalesLanding() {
         </p>
       </section>
 
-      <section className="border-y border-border bg-card/80 px-5 py-12 lg:px-8">
-        <div className="mx-auto max-w-[900px] text-center">
-          <SectionEyebrow>produção para sua empresa</SectionEyebrow>
-          <h2 className="mt-4 text-3xl font-black uppercase leading-tight tracking-[-0.04em] sm:text-5xl">
-            vídeos com IA para divulgar sua empresa.
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            Você envia as informações e nós cuidamos da produção.
-          </p>
-        </div>
-      </section>
 
       <nav className="dot-navigation" aria-label="seções">
         {dotSections.map(({ id, label }) => (
