@@ -322,6 +322,12 @@ export default function CheckoutPage() {
                 </span>
               </div>
 
+              <p className="rounded-xl border border-primary/25 bg-primary/5 px-3 py-3 text-xs leading-relaxed text-muted-foreground">
+                Você está contratando créditos de produção. Os exemplos de quantidade não incluem
+                alterações adicionais. Qualquer consumo por alteração será informado para sua
+                aprovação.
+              </p>
+
               <Button
                 asChild
                 className="h-14 w-full rounded-xl text-lg font-black shadow-[0_0_28px_color-mix(in_srgb,var(--primary)_35%,transparent)]"

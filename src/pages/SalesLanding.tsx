@@ -82,24 +82,20 @@ const heroSubtitle = {
 
 const faqItems = [
   [
-    "O que é um personagem de IA?",
-    "É uma representação digital criada para comunicar sua marca em vídeos, com identidade visual, voz e roteiro personalizados.",
+    "Sou eu que faço os vídeos?",
+    "Não. Nossa equipe cuida da produção a partir das informações enviadas por você.",
   ],
   [
-    "Preciso aparecer ou gravar vídeos?",
-    "Não. A proposta é criar conteúdos sem câmera e sem programação, usando o personagem e o sistema de produção da Cello OG Design.",
+    "Os créditos são para um único vídeo?",
+    "Não. Você pode distribuir seu saldo entre produções de diferentes durações.",
   ],
   [
-    "Como funcionam os créditos?",
-    "Cada 150 créditos correspondem aproximadamente a um minuto de vídeo. Os créditos podem ser divididos entre vídeos de diferentes durações.",
+    "Posso pedir alterações?",
+    "Sim. Alterações e novas versões solicitadas são avaliadas e o consumo de créditos é informado para sua aprovação antes da execução.",
   ],
   [
-    "A automação está incluída nos planos?",
-    "Não. A automação de postagem é um adicional opcional, com valores diferentes para cada nível.",
-  ],
-  [
-    "Onde o conteúdo pode ser publicado?",
-    "As publicações podem ser programadas para Instagram e TikTok, conforme o adicional contratado.",
+    "Preciso usar tudo de uma vez?",
+    "Não. Você pode usar o saldo dentro da validade do plano.",
   ],
 ];
 
@@ -1423,6 +1419,18 @@ export default function SalesLanding() {
         </p>
       </section>
 
+      <section className="border-y border-border bg-card/80 px-5 py-12 lg:px-8">
+        <div className="mx-auto max-w-[900px] text-center">
+          <SectionEyebrow>produção para sua empresa</SectionEyebrow>
+          <h2 className="mt-4 text-3xl font-black uppercase leading-tight tracking-[-0.04em] sm:text-5xl">
+            vídeos com IA para divulgar sua empresa.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+            Você envia as informações e nós cuidamos da produção.
+          </p>
+        </div>
+      </section>
+
       <nav className="dot-navigation" aria-label="seções">
         {dotSections.map(({ id, label }) => (
           <div className="dot-navigation-item" key={id}>
@@ -2188,8 +2196,26 @@ export default function SalesLanding() {
             fetchPriority="high"
             className="section-title-artwork section-title-artwork-credits"
           />
-          <p className="mt-5 text-lg text-muted-foreground">
-            Mais liberdade para criar. Use seus créditos como quiser.
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+            Seu saldo para produzir vídeos e solicitar novas versões. Escolha como usar,
+            conforme a necessidade da sua empresa.
+          </p>
+
+          <div className="mt-8 grid gap-3 rounded-2xl border border-border bg-background/80 p-5 sm:grid-cols-3">
+            {[
+              "Escolha seu saldo.",
+              "Envie as informações do seu projeto.",
+              "Aprove a proposta de produção e acompanhe o uso dos créditos.",
+            ].map((step, index) => (
+              <div key={step} className="flex gap-3">
+                <span className="font-mono text-primary">0{index + 1}</span>
+                <p className="text-sm leading-relaxed text-foreground/85">{step}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-4 text-sm font-semibold text-primary">
+            Validade do saldo: até 6 meses.
           </p>
 
           <div className="mt-12 flex snap-x gap-4 overflow-x-auto pb-6 [scrollbar-width:none] lg:grid lg:grid-cols-5 lg:overflow-visible">
@@ -2266,7 +2292,7 @@ export default function SalesLanding() {
                     {plan.pricePerCredit}
                   </p>
 
-                  <ul className="plan-details mt-5 mb-6 min-w-0 space-y-[10px] text-sm">
+                  <ul className="plan-details mt-5 mb-4 min-w-0 space-y-[10px] text-sm">
                     <li className="flex items-start gap-2">
                       <Check className="plan-check mt-0.5 size-4 shrink-0" aria-hidden="true" />
                       <span>{plan.duration}</span>
@@ -2277,7 +2303,27 @@ export default function SalesLanding() {
                     </li>
                   </ul>
 
+                  <div className="rounded-xl border border-current/20 bg-background/20 p-3 text-sm">
+                    <p className="font-semibold">Exemplos de uso do saldo, sem alterações adicionais.</p>
+                    <p className="mt-2 leading-relaxed">
+                      {plan.divisions.join(" OU ")}.
+                    </p>
+                    <p className="mt-3 text-xs leading-relaxed opacity-85">
+                      Validade do saldo: até 6 meses.
+                    </p>
+                    <p className="mt-3 text-xs leading-relaxed opacity-90">
+                      Alterações e novas versões solicitadas consomem créditos conforme o
+                      trabalho necessário. Você recebe o custo para aprovar antes da execução.
+                    </p>
+                  </div>
+
                   <div className="plan-actions mt-auto flex flex-col gap-3 pb-6">
+                    <p className="mb-1 text-xs leading-relaxed text-muted-foreground">
+                      Você está contratando créditos de produção. Os exemplos de quantidade não
+                      incluem alterações adicionais. Qualquer consumo por alteração será informado
+                      para sua aprovação.
+                    </p>
+
                     <Button
                       className={`plan-button h-[52px] w-full rounded-full ${
                         plan.popular
@@ -2355,10 +2401,11 @@ export default function SalesLanding() {
               <div>
                 <SectionEyebrow>05 / como dividir</SectionEyebrow>
                 <h3 className="mt-4 text-3xl font-black uppercase leading-none tracking-[-0.04em] sm:text-5xl">
-                  veja quanto você consegue produzir
+                  veja como você pode usar seus créditos.
                 </h3>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  150 créditos = 1 minuto de vídeo
+                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                  Escolha um plano e a duração desejada para simular quantos vídeos podemos
+                  produzir para você. 150 créditos = 1 minuto de vídeo.
                 </p>
               </div>
               <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
@@ -2421,7 +2468,7 @@ export default function SalesLanding() {
                 </div>
 
                 <p className="mt-5 text-3xl font-black tracking-tight sm:text-4xl">
-                  {possibleVideos} {possibleVideos === 1 ? "vídeo" : "vídeos"} de{" "}
+                  {possibleVideos} {possibleVideos === 1 ? "vídeo completo" : "vídeos completos"} de{" "}
                   {selectedVideoOption.seconds}s
                 </p>
 
@@ -2441,7 +2488,41 @@ export default function SalesLanding() {
                     </p>
                   </div>
                 </div>
+
+                <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+                  Esta simulação considera a produção inicial, sem alterações adicionais.
+                  Novas versões podem reduzir o saldo disponível para outros vídeos.
+                </p>
               </div>
+            </div>
+          </div>
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+            <div className="rounded-[1.75rem] border border-primary/40 bg-background p-6 sm:p-8">
+              <SectionEyebrow>uso do saldo</SectionEyebrow>
+              <h3 className="mt-4 text-2xl font-black uppercase leading-tight">
+                quer mudar algo? você decide como usar seu saldo.
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                Antes de executar uma alteração, informamos quantos créditos serão necessários.
+                Você aprova o consumo e nós seguimos com a nova versão.
+              </p>
+              <ul className="mt-5 space-y-2 text-sm leading-relaxed text-muted-foreground">
+                <li>• Trocar um roteiro já aprovado.</li>
+                <li>• Solicitar outra versão de uma cena.</li>
+                <li>• Mudar a oferta depois da aprovação.</li>
+                <li>• Pedir uma nova abordagem para o vídeo.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-[1.75rem] border border-border bg-card p-6 sm:p-8">
+              <SectionEyebrow>expectativas sobre IA</SectionEyebrow>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                Produção com inteligência artificial: confira nosso portfólio para conhecer o
+                estilo. Cenas geradas podem apresentar diferenças em relação a pessoas, produtos
+                e ambientes reais. Pedidos que exigem reprodução fiel precisam de avaliação antes
+                da contratação.
+              </p>
             </div>
           </div>
         </div>
