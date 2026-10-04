@@ -387,7 +387,12 @@ function CreditVideoRing() {
           <div
             className="credit-video-ring-item"
             key={`${item.title}-${index}`}
-            style={{ "--ring-index": index } as React.CSSProperties}
+            style={
+              {
+                "--ring-index": index,
+                "--ring-count": ringItems.length,
+              } as React.CSSProperties
+            }
           >
             <video
               src={item.src}
