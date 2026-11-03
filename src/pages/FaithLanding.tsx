@@ -18,7 +18,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const CHECKOUT_URL = "#oferta";
+const CHECKOUT_URL = "https://pay.kiwify.com.br/5xUKr2J";
 
 const contents = [
   {
