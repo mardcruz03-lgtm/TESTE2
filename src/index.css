@@ -6350,3 +6350,147 @@ body:has([data-slot="dialog-content"].checkout-dialog)
     scroll-margin-top: calc(var(--nav-h) + 16px);
   }
 }
+
+/* Leitura confortável e lista de conteúdos em destaque na jornada. */
+.faith-page .faith-hero-copy > p,
+.faith-page .faith-identification p,
+.faith-page .faith-for-you-list,
+.faith-page .faith-section-heading > p,
+.faith-page .faith-content-card p,
+.faith-page .faith-step p,
+.faith-page .faith-phase-card p,
+.faith-page .faith-bonus-card p,
+.faith-page .faith-offer-copy > p,
+.faith-page .faith-offer-copy li,
+.faith-page .faith-guarantee p,
+.faith-page .faith-accordion [data-slot="accordion-content"],
+.faith-page .faith-final-cta p {
+  font-size: 18px;
+}
+
+.faith-page .faith-cta {
+  min-height: 60px;
+  font-size: 18px;
+}
+
+.faith-page .faith-header-link {
+  min-height: 48px;
+  font-size: 15px;
+}
+
+.faith-hero-benefits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  max-width: 560px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faith-hero-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #304761;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.faith-hero-benefits li:last-child {
+  grid-column: 1 / -1;
+}
+
+.faith-hero-benefits svg,
+.faith-for-you-list svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: #9b783e;
+}
+
+.faith-for-you {
+  padding: 84px 0;
+  background: #fffdf8;
+}
+
+.faith-for-you-inner {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  align-items: center;
+  gap: 56px;
+}
+
+.faith-for-you-inner h2 {
+  margin: 14px 0 0;
+  font-size: clamp(36px, 4.2vw, 52px);
+  line-height: 1.08;
+}
+
+.faith-for-you-list {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #43586e;
+}
+
+.faith-for-you-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .faith-page .faith-header-link {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .faith-hero-benefits {
+    grid-template-columns: 1fr;
+    gap: 11px;
+    margin-top: 20px;
+  }
+
+  .faith-hero-benefits li,
+  .faith-page .faith-for-you-list {
+    font-size: 17px;
+  }
+
+  .faith-hero-benefits li:last-child {
+    grid-column: auto;
+  }
+
+  .faith-for-you {
+    padding: 68px 0;
+  }
+
+  .faith-for-you-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .faith-page .faith-hero-copy > p,
+  .faith-page .faith-identification p,
+  .faith-page .faith-section-heading > p,
+  .faith-page .faith-content-card p,
+  .faith-page .faith-step p,
+  .faith-page .faith-phase-card p,
+  .faith-page .faith-bonus-card p,
+  .faith-page .faith-offer-copy > p,
+  .faith-page .faith-offer-copy li,
+  .faith-page .faith-guarantee p,
+  .faith-page .faith-accordion [data-slot="accordion-content"],
+  .faith-page .faith-final-cta p {
+    font-size: 17px;
+  }
+
+  .faith-page .faith-cta {
+    min-height: 58px;
+    font-size: 17px;
+  }
+}

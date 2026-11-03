@@ -85,7 +85,7 @@ const faqs = [
   ],
   [
     "Como recebo o material?",
-    "Após a confirmação da compra, você receberá as instruções de acesso no canal informado durante o pagamento.",
+    "Após a confirmação da compra, você receberá as instruções de acesso no e-mail informado durante o pagamento.",
   ],
   [
     "Por quanto tempo terei acesso?",
@@ -159,9 +159,22 @@ export default function FaithLanding() {
             <span className="faith-eyebrow"><Sparkles aria-hidden="true" /> um caminho de fé, um dia de cada vez</span>
             <h1>Você não precisa enfrentar esse momento <em>sem direção.</em></h1>
             <p>
-              Uma jornada de 21 dias com reflexões, orações e práticas para
-              acompanhar você em um recomeço com mais presença e esperança.
+              Uma jornada digital de 21 dias para fortalecer sua fé e recomeçar
+              com mais esperança. Todos os dias, você recebe uma reflexão, uma
+              oração em áudio e um exercício simples. Você acessa pelo celular
+              e faz no seu próprio ritmo.
             </p>
+            <ul className="faith-hero-benefits">
+              {[
+                "21 reflexões guiadas",
+                "21 orações em áudio",
+                "Caderno digital e calendário",
+                "Exercícios simples de reflexão",
+                "Acesso pelo celular",
+              ].map((item) => (
+                <li key={item}><Check aria-hidden="true" />{item}</li>
+              ))}
+            </ul>
             <PurchaseLink>Quero começar minha jornada</PurchaseLink>
             <div className="faith-hero-note">
               <LockKeyhole aria-hidden="true" />
@@ -226,6 +239,21 @@ export default function FaithLanding() {
               reflexão e gentileza.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="faith-for-you">
+        <div className="faith-container faith-for-you-inner">
+          <div>
+            <span className="faith-eyebrow">um espaço para o seu momento</span>
+            <h2>Isto é para você se...</h2>
+          </div>
+          <ul className="faith-for-you-list">
+            <li><Check aria-hidden="true" />Sente que precisa renovar a esperança.</li>
+            <li><Check aria-hidden="true" />Deseja retomar sua rotina de oração.</li>
+            <li><Check aria-hidden="true" />Quer um momento diário de fé e reflexão.</li>
+            <li><Check aria-hidden="true" />Prefere seguir no próprio ritmo, pelo celular.</li>
+          </ul>
         </div>
       </section>
 
@@ -317,8 +345,9 @@ export default function FaithLanding() {
             <span className="faith-eyebrow">sua jornada começa aqui</span>
             <h2>Um convite para recomeçar com fé.</h2>
             <p>
-              Tenha acesso à jornada completa de 21 dias e aos materiais para
-              seguir cada etapa no seu tempo.
+              Você recebe acesso digital à jornada completa por R$ 27,90, em
+              pagamento único. Após a compra, as instruções de acesso são
+              enviadas para o e-mail informado.
             </p>
             <ul>
               <li><Check aria-hidden="true" /> 21 reflexões e 21 orações em áudio</li>
@@ -346,8 +375,8 @@ export default function FaithLanding() {
             <span className="faith-eyebrow">sua decisão, com tranquilidade</span>
             <h2>Você tem 7 dias de garantia.</h2>
             <p>
-              Acesse as informações da compra e, se decidir que a jornada não
-              é para você, poderá solicitar o reembolso dentro do prazo de 7 dias.
+              Se em até 7 dias você perceber que a jornada não é para você,
+              pode pedir o reembolso. Simples assim.
             </p>
           </div>
         </div>
