@@ -6494,3 +6494,580 @@ body:has([data-slot="dialog-content"].checkout-dialog)
     font-size: 17px;
   }
 }
+
+.faith-page {
+  overflow-x: clip;
+}
+
+.faith-header {
+  position: absolute;
+}
+
+.faith-nav {
+  gap: clamp(14px, 2.4vw, 30px);
+}
+
+.faith-header-link {
+  min-height: 50px;
+  background: #fffdf8;
+}
+
+.faith-hero {
+  min-height: 700px;
+  padding-top: 126px;
+}
+
+.faith-hero h1 {
+  font-size: clamp(46px, 5.3vw, 66px);
+  line-height: 1.06;
+}
+
+.faith-hero-copy > .faith-eyebrow {
+  max-width: 100%;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.faith-hero-benefits {
+  grid-template-columns: 1fr;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.faith-hero-benefits li {
+  font-size: 17px;
+}
+
+.faith-price-microcopy {
+  margin: 10px 0 0;
+  color: #536273;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.faith-hero-copy .faith-price-microcopy {
+  text-align: left;
+}
+
+.faith-hero-note {
+  margin-top: 12px;
+  font-size: 15px;
+}
+
+.faith-trust-row span {
+  font-size: 15px;
+}
+
+.faith-check-list,
+.faith-future-list {
+  display: grid;
+  gap: 13px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faith-check-list li,
+.faith-future-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  color: #43586e;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.faith-check-list svg,
+.faith-future-list svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  margin-top: 4px;
+  color: #9b783e;
+}
+
+.faith-future-section {
+  padding: 92px 0;
+  background: #fffdf8;
+}
+
+.faith-future-section .faith-section-heading {
+  margin-bottom: 30px;
+}
+
+.faith-future-list {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.faith-future-list li {
+  border-bottom: 1px solid #e8e2d5;
+  padding: 12px 0;
+}
+
+.faith-future-note {
+  margin: 28px auto 0;
+  color: #18334f;
+  font-family: var(--font-heading);
+  font-size: 23px;
+  text-align: center;
+}
+
+.faith-inline-cta {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.faith-for-you-note {
+  display: block !important;
+  margin-top: 10px;
+  border-left: 2px solid #c49a52;
+  padding: 8px 0 8px 15px;
+  color: #5f6c79;
+  font-size: 16px;
+  line-height: 1.55 !important;
+}
+
+.faith-how {
+  scroll-margin-top: 28px;
+}
+
+.faith-step {
+  min-height: 145px;
+}
+
+.faith-step h3 {
+  font-size: 23px;
+}
+
+.faith-step p {
+  font-size: 17px;
+}
+
+.faith-preview {
+  padding: 88px 0;
+  background: #f6f2e9;
+}
+
+.faith-preview-inner {
+  max-width: 860px;
+  text-align: center;
+}
+
+.faith-preview-sequence {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 28px auto 18px;
+}
+
+.faith-preview-sequence > span {
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ded7c8;
+  border-radius: 16px;
+  background: #fffdf8;
+  padding: 16px 20px;
+  color: #18334f;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.faith-preview-sequence > span svg {
+  width: 22px;
+  height: 22px;
+  color: #9b783e;
+}
+
+.faith-preview-sequence > svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: #9b783e;
+}
+
+.faith-preview-inner > p {
+  color: #5f6c79;
+  font-size: 17px;
+}
+
+.faith-origin {
+  padding: 96px 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgb(196 154 82 / 11%), transparent 56%),
+    #fffdf8;
+}
+
+.faith-origin-inner {
+  max-width: 820px;
+  text-align: center;
+}
+
+.faith-origin-icon {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  margin: 0 auto 20px;
+  border: 1px solid rgb(196 154 82 / 40%);
+  border-radius: 50%;
+  color: #9b783e;
+}
+
+.faith-origin-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.faith-origin h2,
+.faith-objection h2 {
+  margin: 14px 0 18px;
+  font-size: clamp(34px, 4.2vw, 50px);
+  line-height: 1.1;
+}
+
+.faith-origin-inner > p,
+.faith-objection p {
+  color: #5b6876;
+  font-size: 18px;
+}
+
+.faith-origin blockquote {
+  margin: 28px 0 10px;
+  border-left: 3px solid #c49a52;
+  background: #f6f2e9;
+  padding: 24px 28px;
+  color: #18334f;
+  font-family: var(--font-heading);
+  font-size: 23px;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.faith-origin-credit {
+  margin: 12px 0 0;
+  color: #18334f !important;
+  font-weight: 700;
+}
+
+.faith-origin-bio {
+  margin-top: 8px;
+  font-size: 15px !important;
+}
+
+.faith-objection {
+  padding: 80px 0;
+  background: #f6f2e9;
+}
+
+.faith-objection-inner {
+  max-width: 820px;
+  text-align: center;
+}
+
+.faith-offer-intro {
+  margin: 24px 0 0;
+  color: #687483;
+  font-size: 16px;
+}
+
+.faith-price-caption {
+  line-height: 1.5;
+}
+
+.faith-price-card .faith-cta {
+  min-height: 62px;
+}
+
+.faith-final-cta .faith-price-microcopy {
+  margin-top: 14px;
+  color: rgb(255 253 248 / 78%);
+}
+
+.faith-accordion [data-slot="accordion-trigger"] {
+  min-height: 64px;
+  font-size: 18px;
+}
+
+.faith-mobile-cta {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-top: 1px solid #ded7c8;
+  background: rgb(255 253 248 / 97%);
+  padding: 10px max(18px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+  box-shadow: 0 -8px 24px rgb(24 51 79 / 10%);
+}
+
+.faith-mobile-cta > strong {
+  color: #18334f;
+  font-family: var(--font-heading);
+  font-size: 23px;
+  white-space: nowrap;
+}
+
+.faith-mobile-cta .faith-cta {
+  min-height: 48px;
+  margin: 0;
+  padding: 0 20px;
+  font-size: 15px;
+}
+
+@media (max-width: 900px) {
+  .faith-header {
+    width: calc(100% - 36px);
+  }
+
+  .faith-hero {
+    min-height: 0;
+  }
+
+  .faith-hero-grid {
+    grid-template-columns: 1fr 0.82fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .faith-page {
+    padding-bottom: 82px;
+  }
+
+  .faith-container {
+    width: calc(100% - 36px);
+  }
+
+  .faith-header {
+    width: calc(100% - 32px);
+    height: 66px;
+  }
+
+  .faith-brand {
+    font-size: 17px;
+  }
+
+  .faith-header-link {
+    min-height: 44px;
+    padding: 7px 11px;
+    font-size: 13px;
+  }
+
+  .faith-nav {
+    display: none;
+  }
+
+  .faith-hero {
+    padding: 92px 0 42px;
+  }
+
+  .faith-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .faith-hero h1 {
+    margin: 17px 0 14px;
+    font-size: clamp(36px, 10.8vw, 46px);
+    line-height: 1.08;
+  }
+
+  .faith-hero-copy > p {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .faith-hero-copy > .faith-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.07em;
+  }
+
+  .faith-hero-benefits {
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .faith-hero-benefits li {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .faith-hero .faith-cta {
+    min-height: 56px;
+    margin-top: 19px;
+    padding: 0 16px;
+    font-size: 15px;
+  }
+
+  .faith-hero .faith-price-microcopy {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .faith-hero-note {
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  .faith-hero-art {
+    min-height: 380px;
+    margin-top: 0;
+  }
+
+  .faith-phone {
+    width: 205px;
+    height: 365px;
+    transform: none;
+  }
+
+  .faith-note-one {
+    left: 0;
+  }
+
+  .faith-note-two {
+    right: 0;
+  }
+
+  .faith-trust-row {
+    gap: 12px;
+    padding: 18px 0;
+  }
+
+  .faith-trust-row span {
+    font-size: 12px;
+  }
+
+  .faith-pain-section,
+  .faith-future-section,
+  .faith-preview,
+  .faith-origin,
+  .faith-objection {
+    padding: 68px 0;
+  }
+
+  .faith-identification-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .faith-identification h2,
+  .faith-section-heading h2,
+  .faith-bonus-heading h2,
+  .faith-offer-copy h2,
+  .faith-guarantee h2,
+  .faith-final-cta h2,
+  .faith-origin h2,
+  .faith-objection h2 {
+    font-size: clamp(32px, 9vw, 39px);
+    line-height: 1.12;
+  }
+
+  .faith-check-list {
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .faith-check-list li,
+  .faith-future-list li {
+    font-size: 16px;
+  }
+
+  .faith-future-note {
+    font-size: 20px;
+  }
+
+  .faith-content-section,
+  .faith-phases,
+  .faith-faq,
+  .faith-how {
+    padding: 68px 0;
+  }
+
+  .faith-content-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .faith-content-card,
+  .faith-content-card:nth-last-child(-n + 2) {
+    grid-column: auto;
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .faith-content-card p,
+  .faith-step p,
+  .faith-phase-card p,
+  .faith-bonus-card p {
+    font-size: 16px;
+  }
+
+  .faith-steps {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .faith-step {
+    min-height: 0;
+  }
+
+  .faith-preview-sequence {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .faith-preview-sequence > span {
+    width: 100%;
+    min-height: 62px;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .faith-preview-sequence > svg {
+    transform: rotate(90deg);
+  }
+
+  .faith-origin blockquote {
+    margin-top: 22px;
+    padding: 19px;
+    font-size: 20px;
+  }
+
+  .faith-origin-inner > p,
+  .faith-objection p {
+    font-size: 16px;
+  }
+
+  .faith-mobile-cta {
+    display: flex;
+  }
+
+  .faith-mobile-cta .faith-cta {
+    min-height: 46px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  .faith-footer {
+    padding-bottom: 26px;
+  }
+
+  .faith-accordion [data-slot="accordion-trigger"] {
+    min-height: 60px;
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faith-phone {
+    animation: none;
+  }
+}

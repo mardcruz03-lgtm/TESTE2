@@ -1,13 +1,17 @@
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   BookOpen,
   CalendarDays,
   Check,
+  Compass,
   Headphones,
   Heart,
   Leaf,
   LockKeyhole,
+  Quote,
   ShieldCheck,
+  Smartphone,
   Sparkles,
   Sun,
 } from "lucide-react";
@@ -24,32 +28,32 @@ const contents = [
   {
     icon: BookOpen,
     title: "21 reflexões guiadas",
-    description:
-      "Uma leitura para cada dia, com palavras para acompanhar seu momento e ajudar você a seguir um passo de cada vez.",
+    description: "Uma mensagem para cada dia, organizada para ajudar você a iniciar seu momento de oração.",
   },
   {
     icon: Headphones,
     title: "21 orações em áudio",
-    description:
-      "Orações para ouvir no seu tempo, criando um espaço de pausa, presença e conexão.",
-  },
-  {
-    icon: BookOpen,
-    title: "Caderno digital",
-    description:
-      "Páginas para registrar pensamentos, intenções e pequenas descobertas ao longo do percurso.",
-  },
-  {
-    icon: CalendarDays,
-    title: "Calendário dos 21 dias",
-    description:
-      "Uma visão simples do caminho para você acompanhar cada etapa sem pressa.",
+    description: "Orações para acompanhar seu momento com Deus, inclusive quando faltarem palavras.",
   },
   {
     icon: Sparkles,
-    title: "Exercícios de reflexão",
-    description:
-      "Práticas breves para transformar a leitura em um momento de atenção e cuidado consigo.",
+    title: "21 exercícios práticos",
+    description: "Ações simples para levar a mensagem do dia para a sua rotina.",
+  },
+  {
+    icon: CalendarDays,
+    title: "Conteúdo organizado por dia",
+    description: "Uma sequência clara para acompanhar a jornada, um dia de cada vez.",
+  },
+  {
+    icon: Smartphone,
+    title: "Acesso em seus dispositivos",
+    description: "A jornada é digital e pode ser acompanhada pelo celular, tablet ou computador.",
+  },
+  {
+    icon: LockKeyhole,
+    title: "Acesso após a confirmação",
+    description: "As instruções de acesso são enviadas depois da confirmação do pagamento.",
   },
 ];
 
@@ -75,31 +79,41 @@ const phases = [
 ];
 
 const faqs = [
-  [
-    "Como funciona a jornada?",
-    "São 21 dias de conteúdo digital, com uma reflexão, uma oração em áudio e uma proposta de exercício para acompanhar cada etapa.",
-  ],
-  [
-    "Preciso fazer tudo no mesmo horário?",
-    "Não. Você pode acessar o material no horário que fizer sentido para sua rotina e seguir no seu próprio ritmo.",
-  ],
-  [
-    "Como recebo o material?",
-    "Após a confirmação da compra, você receberá as instruções de acesso no e-mail informado durante o pagamento.",
-  ],
-  [
-    "Por quanto tempo terei acesso?",
-    "O acesso é digital. As informações de disponibilidade e uso serão apresentadas no momento da compra.",
-  ],
-  [
-    "O conteúdo substitui terapia ou acompanhamento profissional?",
-    "Não. É um material de apoio espiritual e reflexão, e não substitui atendimento médico, psicológico ou outro acompanhamento profissional.",
-  ],
-  [
-    "E se eu mudar de ideia?",
-    "Você conta com 7 dias para solicitar o reembolso, conforme as orientações apresentadas na compra.",
-  ],
+  ["Como recebo o acesso?", "Depois da confirmação do pagamento, as instruções de acesso são enviadas para o e-mail informado na compra."],
+  ["Quanto tempo preciso reservar por dia?", "Não há um tempo diário confirmado para informar. Você pode escolher um momento que faça sentido para sua rotina."],
+  ["Consigo acompanhar pelo celular?", "Sim. A jornada é digital e foi pensada para acompanhar pelo celular; também pode ser acessada em tablet ou computador."],
+  ["As orações são em áudio?", "Sim. A jornada inclui 21 orações em áudio."],
+  ["Preciso instalar algum aplicativo?", "Não há informação confirmada sobre a necessidade de instalar um aplicativo. Consulte as instruções de acesso enviadas após a compra."],
+  ["E se eu perder um dia?", "Você não precisa desistir. Retome a jornada de onde parou e siga no seu ritmo."],
+  ["Por quanto tempo terei acesso?", "O prazo de acesso será informado nas orientações apresentadas durante a compra."],
+  ["Como funciona a garantia?", "Você pode solicitar o reembolso dentro de 7 dias, conforme as condições da plataforma de pagamento."],
+  ["O pagamento é seguro?", "O pagamento é processado pela Kiwify, no ambiente de compra da plataforma."],
+  ["A jornada substitui acompanhamento profissional?", "Não. Este material é de apoio espiritual e reflexão e não substitui acompanhamento médico, psicológico ou de outros profissionais."],
 ] as const;
+
+const trackingParameters = [
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_content",
+  "utm_term",
+  "fbclid",
+] as const;
+
+function getCheckoutUrl() {
+  const checkout = new URL(CHECKOUT_URL);
+  const incomingParameters = new URLSearchParams(window.location.search);
+
+  trackingParameters.forEach((parameter) => {
+    if (!checkout.searchParams.has(parameter)) {
+      incomingParameters.getAll(parameter).forEach((value) => {
+        checkout.searchParams.append(parameter, value);
+      });
+    }
+  });
+
+  return checkout.toString();
+}
 
 function SectionHeading({
   eyebrow,
@@ -127,7 +141,7 @@ function PurchaseLink({
   className?: string;
 }) {
   return (
-    <a href={CHECKOUT_URL} className={`faith-cta ${className}`}>
+    <a href={getCheckoutUrl()} className={`faith-cta ${className}`}>
       {children}
       <ArrowRight aria-hidden="true" />
     </a>
@@ -135,6 +149,39 @@ function PurchaseLink({
 }
 
 export default function FaithLanding() {
+  const [showMobileCta, setShowMobileCta] = useState(false);
+
+  useEffect(() => {
+    const hero = document.getElementById("inicio");
+    const faq = document.getElementById("duvidas");
+    const footer = document.querySelector(".faith-footer");
+
+    if (!hero || !faq || !footer) return;
+
+    let heroVisible = true;
+    let faqVisible = false;
+    let footerVisible = false;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target === hero) heroVisible = entry.isIntersecting;
+          if (entry.target === faq) faqVisible = entry.isIntersecting;
+          if (entry.target === footer) footerVisible = entry.isIntersecting;
+        });
+
+        setShowMobileCta(!heroVisible && !faqVisible && !footerVisible);
+      },
+      { threshold: 0.05 },
+    );
+
+    observer.observe(hero);
+    observer.observe(faq);
+    observer.observe(footer);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className="faith-page min-h-screen bg-background text-foreground">
       <header className="faith-header">
@@ -143,12 +190,13 @@ export default function FaithLanding() {
           <span>21 dias <i>de fé</i></span>
         </a>
         <nav className="faith-nav" aria-label="Navegação principal">
-          <a href="#jornada">A jornada</a>
-          <a href="#conteudo">O que inclui</a>
+          <a href="#para-quem">Para quem é</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#conteudo">O que você recebe</a>
           <a href="#duvidas">Dúvidas</a>
         </nav>
-        <a className="faith-header-link" href={CHECKOUT_URL}>
-          Começar jornada <ArrowRight aria-hidden="true" />
+        <a className="faith-header-link" href={getCheckoutUrl()}>
+          Começar meus 21 dias <ArrowRight aria-hidden="true" />
         </a>
       </header>
 
@@ -156,29 +204,27 @@ export default function FaithLanding() {
         <div className="faith-hero-glow" aria-hidden="true" />
         <div className="faith-container faith-hero-grid">
           <div className="faith-hero-copy">
-            <span className="faith-eyebrow"><Sparkles aria-hidden="true" /> um caminho de fé, um dia de cada vez</span>
-            <h1>Você não precisa enfrentar esse momento <em>sem direção.</em></h1>
+            <span className="faith-eyebrow"><Sparkles aria-hidden="true" /> Você lembra de quando orar não parecia tão difícil?</span>
+            <h1>A constância com Deus que você sente falta pode ser reconstruída — <em>um dia de cada vez.</em></h1>
             <p>
-              Uma jornada digital de 21 dias para fortalecer sua fé e recomeçar
-              com mais esperança. Todos os dias, você recebe uma reflexão, uma
-              oração em áudio e um exercício simples. Você acessa pelo celular
-              e faz no seu próprio ritmo.
+              O 21 Dias de Fé para Recomeçar é uma jornada guiada para quem deseja
+              voltar a orar, mas está desanimado, distante de Deus ou não consegue
+              manter uma rotina espiritual.
             </p>
             <ul className="faith-hero-benefits">
               {[
-                "21 reflexões guiadas",
-                "21 orações em áudio",
-                "Caderno digital e calendário",
-                "Exercícios simples de reflexão",
-                "Acesso pelo celular",
+                "Saiba o que refletir e como começar sua oração",
+                "Tenha uma direção simples para cada um dos 21 dias",
+                "Crie uma rotina possível, mesmo com pouco tempo",
               ].map((item) => (
                 <li key={item}><Check aria-hidden="true" />{item}</li>
               ))}
             </ul>
-            <PurchaseLink>Quero começar minha jornada</PurchaseLink>
+            <PurchaseLink>Quero começar meus 21 dias</PurchaseLink>
+            <p className="faith-price-microcopy">Por R$ 27,90 · acesso imediato · garantia de 7 dias</p>
             <div className="faith-hero-note">
               <LockKeyhole aria-hidden="true" />
-              <span>Conteúdo digital · Acesso simples e privado</span>
+              <span>Pagamento processado com segurança pela Kiwify.</span>
             </div>
           </div>
 
@@ -193,19 +239,19 @@ export default function FaithLanding() {
                 <h2>Há um novo começo possível.</h2>
                 <span className="faith-phone-rule" />
                 <p className="faith-phone-verse">
-                  Respire. Você não precisa saber todo o caminho para dar o próximo passo.
+                  Uma direção para refletir, orar e levar a mensagem para o seu dia.
                 </p>
                 <span className="faith-phone-progress"><i /></span>
-                <span className="faith-phone-caption">reflexão de hoje</span>
+                <span className="faith-phone-caption">reflexão · oração · ação</span>
               </div>
             </div>
             <div className="faith-floating-note faith-note-one">
               <Headphones aria-hidden="true" /><span>oração em áudio</span>
             </div>
             <div className="faith-floating-note faith-note-two">
-              <Heart aria-hidden="true" /><span>no seu tempo</span>
+              <Heart aria-hidden="true" /><span>exercício do dia</span>
             </div>
-            <div className="faith-art-caption">21 dias para caminhar com mais presença</div>
+            <div className="faith-art-caption">Prévia visual da jornada: reflexão, oração e ação</div>
           </div>
         </div>
         <a className="faith-scroll-cue" href="#confianca" aria-label="Conheça a jornada">
@@ -215,44 +261,77 @@ export default function FaithLanding() {
 
       <section id="confianca" className="faith-trust">
         <div className="faith-container faith-trust-row">
-          <span><ShieldCheck aria-hidden="true" /> Jornada digital</span>
+          <span><ShieldCheck aria-hidden="true" /> Jornada guiada de 21 dias</span>
           <i aria-hidden="true" />
-          <span><Heart aria-hidden="true" /> Feita para o seu ritmo</span>
+          <span><Heart aria-hidden="true" /> No seu próprio ritmo</span>
           <i aria-hidden="true" />
-          <span><LockKeyhole aria-hidden="true" /> Acesso privado</span>
+          <span><LockKeyhole aria-hidden="true" /> Pagamento pela Kiwify</span>
         </div>
       </section>
 
-      <section className="faith-identification">
+      <section className="faith-identification faith-pain-section">
         <div className="faith-container faith-identification-grid">
           <div className="faith-identification-symbol"><Leaf aria-hidden="true" /></div>
           <div>
-            <span className="faith-eyebrow">talvez seja hora de pausar</span>
-            <h2>Recomeçar não significa ter tudo resolvido.</h2>
+            <span className="faith-eyebrow">um recomeço possível</span>
+            <h2>Você quer se aproximar de Deus, mas alguma coisa sempre interrompe seu recomeço?</h2>
             <p>
-              Às vezes, significa encontrar um pouco de espaço para respirar,
-              acolher o que está acontecendo e perceber que você pode seguir
-              com um passo pequeno de cada vez.
+              Talvez você já tenha prometido que voltaria a orar. Começou animado,
+              conseguiu por alguns dias, mas a correria, o cansaço ou as preocupações
+              tomaram novamente o seu tempo.
             </p>
+            <p>
+              Então veio a culpa. Você sente falta da proximidade com Deus, mas não
+              sabe o que dizer, por onde começar ou como continuar sem abandonar
+              tudo outra vez.
+            </p>
+            <ul className="faith-check-list">
+              <li><Check aria-hidden="true" />Você sente vontade de orar, mas não encontra as palavras</li>
+              <li><Check aria-hidden="true" />Começa uma rotina e abandona depois de poucos dias</li>
+              <li><Check aria-hidden="true" />Abre a Bíblia, mas não sabe o que refletir</li>
+              <li><Check aria-hidden="true" />Sente que sua vida espiritual ficou em segundo plano</li>
+              <li><Check aria-hidden="true" />Precisa de uma direção simples para recomeçar</li>
+            </ul>
             <p className="faith-identification-emphasis">
-              Esta jornada foi criada para acompanhar esse processo com fé,
-              reflexão e gentileza.
+              Você não precisa esperar se sentir completamente preparado. Precisa
+              apenas de um caminho possível para dar o primeiro passo.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="faith-for-you">
+      <section className="faith-future-section">
+        <div className="faith-container">
+          <SectionHeading
+            eyebrow="um passo de cada vez"
+            title="Imagine chegar ao final dos próximos 21 dias…"
+            description="A proposta da jornada é ajudar você a construir, com calma, um caminho para:"
+          />
+          <ul className="faith-future-list">
+            <li><Check aria-hidden="true" />Saber como iniciar seu momento diário com Deus</li>
+            <li><Check aria-hidden="true" />Ter uma direção de oração para cada dia</li>
+            <li><Check aria-hidden="true" />Reservar alguns minutos da rotina para cuidar da sua fé</li>
+            <li><Check aria-hidden="true" />Levar uma mensagem prática ao longo do dia</li>
+            <li><Check aria-hidden="true" />Contar com um caminho definido para continuar depois da jornada</li>
+          </ul>
+          <p className="faith-future-note">Não se trata de buscar uma experiência perfeita. Trata-se de voltar, um dia de cada vez.</p>
+          <div className="faith-inline-cta"><PurchaseLink>Quero começar meus 21 dias</PurchaseLink></div>
+        </div>
+      </section>
+
+      <section id="para-quem" className="faith-for-you">
         <div className="faith-container faith-for-you-inner">
           <div>
-            <span className="faith-eyebrow">um espaço para o seu momento</span>
-            <h2>Isto é para você se...</h2>
+            <span className="faith-eyebrow">uma jornada para recomeçar</span>
+            <h2>Esta jornada foi criada para quem…</h2>
           </div>
           <ul className="faith-for-you-list">
-            <li><Check aria-hidden="true" />Sente que precisa renovar a esperança.</li>
-            <li><Check aria-hidden="true" />Deseja retomar sua rotina de oração.</li>
-            <li><Check aria-hidden="true" />Quer um momento diário de fé e reflexão.</li>
-            <li><Check aria-hidden="true" />Prefere seguir no próprio ritmo, pelo celular.</li>
+            <li><Check aria-hidden="true" />Sente que se afastou de Deus e deseja retornar</li>
+            <li><Check aria-hidden="true" />Quer voltar a orar, mas não consegue manter constância</li>
+            <li><Check aria-hidden="true" />Precisa transformar intenção em rotina</li>
+            <li><Check aria-hidden="true" />Tem pouco tempo e busca uma direção simples</li>
+            <li><Check aria-hidden="true" />Deseja viver os próximos dias com mais reflexão, oração e propósito</li>
+            <li className="faith-for-you-note">Você não precisa ter conhecimento bíblico avançado. A jornada foi organizada para ser simples, pessoal e possível de acompanhar.</li>
           </ul>
         </div>
       </section>
@@ -260,9 +339,9 @@ export default function FaithLanding() {
       <section id="conteudo" className="faith-content-section">
         <div className="faith-container">
           <SectionHeading
-            eyebrow="um caminho acompanhado"
-            title="Um espaço diário para se reconectar."
-            description="Tudo foi organizado para que você encontre o conteúdo com facilidade e possa fazer dele um momento seu."
+            eyebrow="o que você recebe"
+            title="Tudo o que você precisa para viver os próximos 21 dias com direção."
+            description="Uma jornada digital organizada por dia, para acompanhar pelo celular, tablet ou computador."
           />
           <div className="faith-content-grid">
             {contents.map(({ icon: Icon, title, description }, index) => (
@@ -274,21 +353,22 @@ export default function FaithLanding() {
               </article>
             ))}
           </div>
+          <div className="faith-inline-cta"><PurchaseLink>Quero começar meus 21 dias</PurchaseLink></div>
         </div>
       </section>
 
-      <section className="faith-how">
+      <section id="como-funciona" className="faith-how">
         <div className="faith-container">
           <SectionHeading
-            eyebrow="simples de acompanhar"
-            title="Como funciona."
-            description="Um percurso leve, para caber na vida real."
+            eyebrow="o caminho dos três passos"
+            title="Poucos minutos por dia. Uma direção clara para continuar."
+            description="Cada dia segue uma sequência simples para ajudar você a não depender apenas da motivação."
           />
           <div className="faith-steps">
             {[
-              ["01", "Acesse o material", "Receba as orientações e abra a jornada no seu dispositivo."],
-              ["02", "Reserve um momento", "Leia a reflexão, ouça a oração e experimente o exercício do dia."],
-              ["03", "Siga no seu ritmo", "Acompanhe os 21 dias com liberdade para pausar e retomar quando precisar."],
+              ["01", "Reflita", "Leia uma mensagem curta para direcionar seu pensamento."],
+              ["02", "Ore", "Acompanhe uma oração em áudio, mesmo quando faltarem palavras."],
+              ["03", "Pratique", "Realize uma ação simples para aplicar a mensagem naquele dia."],
             ].map(([number, title, description]) => (
               <article className="faith-step" key={number}>
                 <span>{number}</span>
@@ -320,11 +400,29 @@ export default function FaithLanding() {
         </div>
       </section>
 
+      <section className="faith-preview">
+        <div className="faith-container faith-preview-inner">
+          <SectionHeading
+            eyebrow="prévia visual da jornada"
+            title="Veja como será um dos seus dias"
+            description="Reflexão do dia → oração em áudio → ação prática"
+          />
+          <div className="faith-preview-sequence" aria-label="Sequência diária: reflexão, oração em áudio e ação prática">
+            <span><BookOpen aria-hidden="true" />Reflexão</span>
+            <ArrowRight aria-hidden="true" />
+            <span><Headphones aria-hidden="true" />Oração em áudio</span>
+            <ArrowRight aria-hidden="true" />
+            <span><Sparkles aria-hidden="true" />Ação prática</span>
+          </div>
+          <p>Dentro da jornada, cada dia segue uma sequência simples para ajudar você a não depender apenas da motivação.</p>
+        </div>
+      </section>
+
       <section className="faith-bonuses">
         <div className="faith-container faith-bonuses-inner">
           <div className="faith-bonus-heading">
-            <span className="faith-eyebrow">para apoiar o seu caminho</span>
-            <h2>E ainda tem mais para acompanhar você.</h2>
+            <span className="faith-eyebrow">materiais já incluídos</span>
+            <h2>Materiais para acompanhar seu caminho.</h2>
           </div>
           <article className="faith-bonus-card">
             <span className="faith-card-icon"><BookOpen aria-hidden="true" /></span>
@@ -339,30 +437,66 @@ export default function FaithLanding() {
         </div>
       </section>
 
+      <section className="faith-origin">
+        <div className="faith-container faith-origin-inner">
+          <span className="faith-origin-icon"><Quote aria-hidden="true" /></span>
+          <span className="faith-eyebrow">a origem do projeto</span>
+          <h2>Esta jornada nasceu primeiro em oração</h2>
+          <p>
+            Antes de se tornar um produto, o 21 Dias de Fé para Recomeçar nasceu
+            de um desejo: ajudar pessoas que sentem falta de Deus, mas não sabem
+            como voltar.
+          </p>
+          <blockquote>
+            “Creio que o verdadeiro autor desta jornada é o Espírito Santo. Em
+            oração, recebi a direção e a inspiração para cada parte deste projeto.
+            Meu papel foi organizar essa mensagem em um caminho simples, para que
+            outras pessoas também possam recomeçar.”
+          </blockquote>
+          <p className="faith-origin-credit">— Marcelo da Cruz Costa</p>
+          <p className="faith-origin-bio">Marcelo da Cruz Costa é o idealizador e organizador do projeto 21 Dias de Fé para Recomeçar.</p>
+          <div className="faith-inline-cta"><PurchaseLink>Quero começar meus 21 dias</PurchaseLink></div>
+        </div>
+      </section>
+
+      <section className="faith-objection">
+        <div className="faith-container faith-objection-inner">
+          <span className="faith-eyebrow">sem exigir uma rotina perfeita</span>
+          <h2>E se eu já tentei outras vezes e não consegui continuar?</h2>
+          <p>
+            Esta jornada não exige que você mude toda a sua rotina de uma vez.
+            Cada dia apresenta uma direção curta, uma oração guiada e uma ação
+            simples. Se você perder um dia, não precisa desistir: retome de onde
+            parou.
+          </p>
+          <p>O objetivo não é cumprir uma obrigação perfeita. É criar espaço para voltar a caminhar com Deus.</p>
+        </div>
+      </section>
+
       <section id="oferta" className="faith-offer-section">
         <div className="faith-container faith-offer-grid">
           <div className="faith-offer-copy">
             <span className="faith-eyebrow">sua jornada começa aqui</span>
-            <h2>Um convite para recomeçar com fé.</h2>
+            <h2>Comece hoje sua jornada de volta à oração</h2>
             <p>
-              Você recebe acesso digital à jornada completa por R$ 27,90, em
-              pagamento único. Após a compra, as instruções de acesso são
-              enviadas para o e-mail informado.
+              Receba os 21 dias completos e tenha uma direção para não precisar
+              recomeçar sozinho toda vez.
             </p>
             <ul>
-              <li><Check aria-hidden="true" /> 21 reflexões e 21 orações em áudio</li>
-              <li><Check aria-hidden="true" /> Caderno digital, calendário e exercícios</li>
-              <li><Check aria-hidden="true" /> Dois materiais bônus</li>
+              <li><Check aria-hidden="true" /> Jornada completa de 21 dias</li>
+              <li><Check aria-hidden="true" /> Reflexões guiadas e orações em áudio</li>
+              <li><Check aria-hidden="true" /> Exercícios práticos</li>
+              <li><Check aria-hidden="true" /> Acesso digital após a confirmação do pagamento</li>
               <li><Check aria-hidden="true" /> Garantia de 7 dias</li>
             </ul>
           </div>
           <div className="faith-price-card">
             <span className="faith-price-label">ACESSO À JORNADA COMPLETA</span>
-            <p className="faith-old-price">De <s>R$ 47,00</s></p>
+            <p className="faith-offer-intro">Você recebe os 21 dias completos por apenas:</p>
             <div className="faith-price"><span>R$</span> 27<small>,90</small></div>
-            <p className="faith-price-caption">pagamento único</p>
-            <PurchaseLink className="faith-cta-full">Quero começar agora</PurchaseLink>
-            <p className="faith-secure-note"><LockKeyhole aria-hidden="true" /> Compra segura · Acesso digital</p>
+            <p className="faith-price-caption">pagamento único · cerca de R$ 1,33 por dia da jornada</p>
+            <PurchaseLink className="faith-cta-full">Quero começar meus 21 dias</PurchaseLink>
+            <p className="faith-secure-note"><LockKeyhole aria-hidden="true" /> Pagamento seguro pela Kiwify · acesso imediato</p>
             <div className="faith-guarantee-mini"><ShieldCheck aria-hidden="true" /><span><strong>7 dias de garantia</strong><br />Conheça a jornada com tranquilidade.</span></div>
           </div>
         </div>
@@ -373,10 +507,12 @@ export default function FaithLanding() {
           <span className="faith-guarantee-icon"><ShieldCheck aria-hidden="true" /></span>
           <div>
             <span className="faith-eyebrow">sua decisão, com tranquilidade</span>
-            <h2>Você tem 7 dias de garantia.</h2>
+            <h2>Você tem 7 dias para conhecer a jornada</h2>
             <p>
-              Se em até 7 dias você perceber que a jornada não é para você,
-              pode pedir o reembolso. Simples assim.
+              Depois da compra, você poderá acessar o conteúdo e conhecer a
+              proposta com tranquilidade. Se entender que a jornada não é para
+              você, poderá solicitar o reembolso dentro do prazo de 7 dias,
+              conforme as condições da plataforma de pagamento.
             </p>
           </div>
         </div>
@@ -387,7 +523,7 @@ export default function FaithLanding() {
           <SectionHeading
             eyebrow="perguntas frequentes"
             title="Dúvidas? Estamos aqui."
-            description="Encontre respostas antes de começar."
+            description="Respostas claras antes de começar sua jornada."
           />
           <Accordion type="single" collapsible className="faith-accordion">
             {faqs.map(([question, answer], index) => (
@@ -403,9 +539,10 @@ export default function FaithLanding() {
       <section className="faith-final-cta">
         <div className="faith-container">
           <span className="faith-eyebrow">um dia de cada vez</span>
-          <h2>Seu próximo passo pode começar com um momento de pausa.</h2>
-          <p>Conheça a jornada 21 Dias de Fé para Recomeçar.</p>
-          <PurchaseLink>Quero conhecer a jornada</PurchaseLink>
+          <h2>Talvez você não precise esperar por outro momento. Talvez seu recomeço possa começar hoje.</h2>
+          <p>Você não precisa resolver toda a sua vida espiritual agora. Comece separando um dia, uma reflexão e uma oração de cada vez.</p>
+          <PurchaseLink>Quero começar meus 21 dias</PurchaseLink>
+          <p className="faith-price-microcopy">R$ 27,90 · acesso imediato · garantia de 7 dias</p>
         </div>
       </section>
 
@@ -425,6 +562,12 @@ export default function FaithLanding() {
           </p>
         </div>
       </footer>
+      {showMobileCta && (
+        <aside className="faith-mobile-cta" aria-label="Começar a jornada">
+          <strong>R$ 27,90</strong>
+          <PurchaseLink>Começar agora</PurchaseLink>
+        </aside>
+      )}
     </main>
   );
 }
